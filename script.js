@@ -29,12 +29,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const endCell = document.createElement("td");
         endCell.textContent = item.date_end || "-";
 
+        const cpuCell = document.createElement("td");
+        cpuCell.textContent = item.cpu || "-";
+
+        const gpuCell = document.createElement("td");
+        gpuCell.textContent = item.gpu || "-";
+
+        const memCell = document.createElement("td");
+        memCell.textContent = item.mem || "-";
+
+        const gpuCountCell = document.createElement("td");
+        gpuCountCell.textContent = item.gpu_count || "-";
+
         row.appendChild(cmdCell);
         row.appendChild(userCell);
         row.appendChild(profileCell);
         row.appendChild(statusCell);
         row.appendChild(startCell);
         row.appendChild(endCell);
+        row.appendChild(cpuCell);
+        row.appendChild(gpuCell);
+        row.appendChild(memCell);
+        row.appendChild(gpuCountCell);
+
         tableBody.appendChild(row);
       });
 
