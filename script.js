@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.querySelector("#workspaceTable tbody");
   const countdownDiv = document.getElementById("countdown");
 
-  fetch("https://raw.githubusercontent.com/yukinopet/yukino-server/storage/server.json")
+  fetch("https://raw.githubusercontent.com/yukinopet/yukino-server/storage/server.json?nocache=" + new Date().getTime())
     .then(response => response.json())
     .then(data => {
       const entries = Array.isArray(data) ? data : [data];
