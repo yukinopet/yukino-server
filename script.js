@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.querySelector("#workspaceTable tbody");
+  const countdownDiv = document.getElementById("countdown");
 
   fetch("server.json")
     .then(response => response.json())
@@ -36,6 +37,16 @@ document.addEventListener("DOMContentLoaded", () => {
         row.appendChild(endCell);
         tableBody.appendChild(row);
       });
+
+      // Set up countdown for first item's date_end
+      const firstEnd = entries[0]?.date_end;
+      if (firstEnd) {
+        const endTime = new Date(firstEnd.replace(" ", "T")); // Parse as ISO
+        updateCountdown(endTime);
+        setInterval(() => updateCountdown(endTime), 1000);
+      } else {
+        countdownDiv.textContent = "No end time available.";
+      }
     })
     .catch(error => {
       console.error("Error loading local data:", error);
@@ -46,4 +57,20 @@ document.addEventListener("DOMContentLoaded", () => {
       errorRow.appendChild(errorCell);
       tableBody.appendChild(errorRow);
     });
+
+  function updateCountdown(endTime) {
+    const now = new Date();
+    const diff = endTime - now;
+
+    if (diff <= 0) {
+      countdownDiv.textContent = "⏱️ Time has ended.";
+      return;
+    }
+
+    const seconds = Math.floor((diff / 1000) % 60);
+    const minutes = Math.floor((diff / 1000 / 60) % 60);
+    const hours = Math.floor((diff / 1000 / 60 / 60));
+
+    countdownDiv.textContent = `⏳ Time remaining: ${hours}h ${minutes}m ${seconds}s`;
+  }
 });
