@@ -1,1 +1,1 @@
-{"host": "r21.modal.host", "port": 42331, "connect_command": "ssh root@r21.modal.host -p 42331", "app_id": "ap-M69p7qUL3eHX2HncVOVqn5", "username": "minecraftquan01", "profile": "totsuka", "status": "stopped", "date_start": "2025-04-10 16:52:27", "date_end": "2025-04-10 16:52:47"}
+{"host": "r18.modal.host", "port": 34465, "connect_command": "ssh root@r18.modal.host -p 34465", "app_id": "ap-bpKe98W37CZK1GQoe2m7Ki", "username": "minecraftquan01", "profile": "totsuka", "status": "running", "date_start": "2025-04-10 16:53:27", "date_end": "2025-04-10 16:53:47"}
