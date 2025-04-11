@@ -1,8 +1,20 @@
+function parseCustomDate(dateStr) {
+  // Example: "2025-04-11 13:44:54 UTC+07:00"
+  const match = dateStr.match(/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) UTC([+-]\d{2}):(\d{2})$/);
+  if (!match) return null;
+
+  const [_, date, time, tzHour, tzMinute] = match;
+  const isoString = `${date}T${time}${tzHour}:${tzMinute}`;
+  return new Date(isoString);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.querySelector("#workspaceTable tbody");
   const countdownDiv = document.getElementById("countdown");
 
-  fetch("https://raw.githubusercontent.com/yukinopet/yukino-server/storage/server.json?nocache=" + new Date().getTime())
+  const url = "https://raw.githubusercontent.com/yukinopet/yukino-server/storage/server.json";
+
+  fetch(`${url}?t=${Date.now()}`, { cache: "no-store" })
     .then(response => response.json())
     .then(data => {
       const entries = Array.isArray(data) ? data : [data];
@@ -58,9 +70,13 @@ document.addEventListener("DOMContentLoaded", () => {
       // Set up countdown for first item's date_end
       const firstEnd = entries[0]?.date_end;
       if (firstEnd) {
-        const endTime = new Date(firstEnd.replace(" ", "T")); // Parse as ISO
-        updateCountdown(endTime);
-        setInterval(() => updateCountdown(endTime), 1000);
+        const endTime = parseCustomDate(firstEnd);
+        if (isNaN(endTime)) {
+          countdownDiv.textContent = "❌ Invalid end time format.";
+        } else {
+          updateCountdown(endTime);
+          setInterval(() => updateCountdown(endTime), 1000);
+        }
       } else {
         countdownDiv.textContent = "No end time available.";
       }
