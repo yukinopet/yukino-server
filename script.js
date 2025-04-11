@@ -14,7 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const url = "https://raw.githubusercontent.com/yukinopet/yukino-server/storage/server.json";
 
-  fetch(`${url}?t=${Date.now()}`, { cache: "no-store" })
+  fetch(`${url}?t=${Date.now()}`, {
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+    cache: "no-store"
+  })
     .then(response => response.json())
     .then(data => {
       const entries = Array.isArray(data) ? data : [data];
