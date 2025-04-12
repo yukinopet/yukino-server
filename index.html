@@ -4,7 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Yukino's Perpetual Server</title>
-  <link rel="stylesheet" href="styles.css" />
+
+  <script>
+    const timestamp = Date.now();
+
+    // Dynamically load CSS with cache-busting
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = `styles.css?t=${timestamp}`;
+    document.head.appendChild(link);
+  </script>
 </head>
 <body>
   <h1>Yukino's Perpetual Server</h1>
@@ -30,6 +39,11 @@
 
   <div id="countdown" style="margin-top: 20px; font-weight: bold;"></div>
 
-  <script src="script.js"></script>
+  <script>
+    // Dynamically load JS with cache-busting
+    const script = document.createElement("script");
+    script.src = `script.js?t=${timestamp}`;
+    document.body.appendChild(script);
+  </script>
 </body>
 </html>

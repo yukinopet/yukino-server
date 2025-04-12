@@ -1,14 +1,4 @@
-function parseCustomDate(dateStr) {
-  // Example: "2025-04-11 13:44:54 UTC+07:00"
-  const match = dateStr.match(/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) UTC([+-]\d{2}):(\d{2})$/);
-  if (!match) return null;
-
-  const [_, date, time, tzHour, tzMinute] = match;
-  const isoString = `${date}T${time}${tzHour}:${tzMinute}`;
-  return new Date(isoString);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
+function init() {
   const tableBody = document.querySelector("#workspaceTable tbody");
   const countdownDiv = document.getElementById("countdown");
 
@@ -72,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
         tableBody.appendChild(row);
       });
 
-      // Set up countdown for first item's date_end
       const firstEnd = entries[0]?.date_end;
       if (firstEnd) {
         const endTime = parseCustomDate(firstEnd);
@@ -111,4 +100,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     countdownDiv.textContent = `⏳ Time remaining: ${hours}h ${minutes}m ${seconds}s`;
   }
-});
+}
+
+function parseCustomDate(dateStr) {
+  const match = dateStr.match(/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) UTC([+-]\d{2}):(\d{2})$/);
+  if (!match) return null;
+
+  const [_, date, time, tzHour, tzMinute] = match;
+  const isoString = `${date}T${time}${tzHour}:${tzMinute}`;
+  return new Date(isoString);
+}
+
+// Run immediately if DOM is already loaded, otherwise wait
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
